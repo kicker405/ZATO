@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Assets -->
+    <link
+      rel="stylesheet"
+      href="https://static.tildacdn.info/css/tilda-grid-3.0.min.css"
+      type="text/css"
+      media="all"  
+      onerror="this.loaderr='y';"
+      />
+    <link
+      rel="stylesheet"
+      href="https://static.tildacdn.info/ws/project9722711/tilda-blocks-page49738751.min.css?t=1716916547"
+      type="text/css"
+      media="all"
+      onerror="this.loaderr='y';"
+    />
+    <link
+      rel="stylesheet"
+      href="https://static.tildacdn.info/css/tilda-cover-1.0.min.css"
+      type="text/css"
+      media="all"
+      onerror="this.loaderr='y';"
+    />
+    <link rel="stylesheet" href="normolize.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  </head>
+  <body class="t-body" style="margin: 0">
+    <div>
+      <div >
+        <div id="nav754833835marker"></div>
+        <div class="header">
+          <ul class="header__list">
+            <li class="header__list-item"><a href="#">Меню</a></li>
+            <li class="header__list-item"><a href="#">Инфо</a></li>
+            <li class="header__list-item"><a href="#map">Карта</a></li>
+            <li class="header__list-item"><a href="#">Контакты</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="t-cover">
+          <div class="t-cover__carrier loaded"></div>
+          <div class="t-cover__filter"></div>
+          <div class="t-container">
+            <div class="t-width t-width_10">
+              <div class="t-cover__wrapper t-valign_middle">
+                <div class="t182">
+                  <div data-hook-content="covercontent">
+                    <div class="t182__wrapper">
+                      <div class="t182__title t-title t-title_xl t-animate t-animate_started">
+                        Закрытые Административно- территориальные образования
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="t-cover__arrow">
+            <div class="t-cover__arrow-wrapper t-cover__arrow-wrapper_animated">
+              <div class="t-cover__arrow_mobile">
+                <svg class="t-cover__arrow-svg">
+                    <path d="M19.208,18.592c-0.241,0-0.483-0.087-0.673-0.261L0.327,1.74c-0.408-0.372-0.438-1.004-0.066-1.413c0.372-0.409,1.004-0.439,1.413-0.066L19.208,16.24L36.743,0.261c0.411-0.372,1.042-0.342,1.413,0.066c0.372,0.408,0.343,1.041-0.065,1.413L19.881,18.332C19.691,18.505,19.449,18.592,19.208,18.592z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="r t-rec r_showed r_anim">
+        <div class="t-cover t-cover2">
+          <div class="t-cover__filter t-cover__filter2"></div>
+          <div class="t-container">
+            <div class="t-col t-col_10 t-prefix_1 t-align_center">
+              <div class="t-cover__wrapper .t-cover__filter2 t-valign_middle">
+                <div class="t581">
+                  <div data-hook-content="covercontent">
+                    <div class="t581__wrapper t-align_center">
+                      <div class="t581__title t-title t-title_sm t-margin_auto">
+                        Инфо
+                      </div>
+                      <div class="t581__descr t-descr t-descr_xl t-margin_auto">
+                        Данный сайт посвящён закрытым
+                        административно-территориальным образованиям (ЗАТО) РФ.
+                      </div>
+                      <div class="t581__buttons">
+                        <div class="t581__buttons-wrapper t-margin_auto">
+                          <div class="t581__buttons-flex">
+                            <a href="#map" class="t581__btn t-btn t581__btn-size_lg">Посмотреть карту</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="map" class="map">
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const map = L.map("map").setView([61.524, 105.3188], 4);
+        
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+        
+            fetch("cities.json")
+              .then((response) => response.json())
+              .then((cities) => {
+                cities.forEach((city) => {
+                  const coords = city.Координаты
+                    .split(",")
+                    .map((coord) => parseFloat(coord.trim()));
+                  const marker = L.marker(coords).addTo(map);
+                  const popupContent = `
+                          <b>${city.Название}</b><br>
+                          Ранее назывался: ${city["Ранее назывался"]}<br>
+                          Население: ${city["Численность населения"]}<br>
+                          Площадь: ${city.Площадь}
+                      `;
+                  marker.bindPopup(popupContent);
+                });
+              })
+              .catch((error) => {
+                console.error("Ошибка при загрузке данных:", error);
+              });
+          });
+        
+        </script>
+        </div>
+
+      <div class="footer">
+        <h2 class="footer__contacts"><strong>Наши контакты</strong></h2>
+        <h4 class="footer__phone">Телефон: +123456789</h4>
+        <h4 class="footer__adress">Адрес: ТюмГУ</h4>
+        <h5 class="footer__ontime">Время Работы: 9.00-0.00</h5>
+      </div>
+    </div>
+  </body>
+</html>
